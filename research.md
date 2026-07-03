@@ -1,8 +1,6 @@
-# Mobile First vs. Desktop First — was technisch wirklich stimmt
+# Mobile First vs. Desktop First — was technisch stimmt
 
-Deine Ausgangsannahme ist, dass **Desktop First die schnellere/bessere Wahl fürs Laden und
-Rendern** ist. Das ist die eigentlich interessante Frage. Um sie sauber zu beantworten,
-müssen wir zuerst drei Begriffe trennen, die oft in einen Topf geworfen werden.
+Die Frage, ob Desktop First beim Laden und Rendern schneller ist, lässt sich klar beantworten — wenn man drei Begriffe trennt, die oft in einen Topf geworfen werden.
 
 ---
 
@@ -26,7 +24,7 @@ CSSOM (das interne Regel-Modell).
 - Im **Performance-Panel** sichtbar als *„Parse Stylesheet" / „Recalculate Style"*.
 
 **Rendern = Layout + Paint**
-Aus DOM + CSSOM baut der Browser den Render-Tree, rechnet das Layout (wo liegt was) und
+Aus DOM + CSSOM baut der Browser den Render-Tree, rechnet das Layout und
 malt es auf den Bildschirm. Das ist der Moment „die Seite ist da" (First Contentful Paint).
 - Kostet: CPU/GPU-Zeit.
 - Im **Performance-Panel** sichtbar als *„Layout", „Paint"* und die *FCP*-Markierung.
@@ -36,7 +34,7 @@ malt es auf den Bildschirm. Das ist der Moment „die Seite ist da" (First Conte
 
 ---
 
-## 2. Ist Desktop First also schneller? — Nein.
+## 2. Ist Desktop First schneller? — Nein.
 
 Es gibt zwei reale Fälle:
 
@@ -49,8 +47,7 @@ Es gibt zwei reale Fälle:
 | **Rendern** | identisch — gleiche Regeln, gleiches Ergebnis |
 
 → Bei einer gebündelten Datei ist es **performance-neutral**. Desktop First ist hier
-**nicht schneller** — es ist einfach gleich schnell. Der Ladezeit-Vorteil, den man vermutet,
-entsteht an dieser Stelle schlicht nicht.
+**nicht schneller** — es ist gleich schnell.
 
 ### Fall 2 — CSS in mehrere Dateien mit `media`-Attribut gesplittet
 
@@ -59,16 +56,13 @@ Ein Stylesheet, dessen `media`-Query gerade nicht zutrifft, wird zwar noch *gela
 mit **niedrigster Priorität** und **ohne den ersten Paint zu blockieren**.
 
 Entscheidend ist dann: *Wer bekommt das kleine, render-blockende Fundament?* Antwort: **die
-Mehrheit deiner Nutzer.** Genau hier wird die 70-%-Zahl vom Business- zum **technischen**
+Mehrheit der Nutzer.** Genau hier wird die 70-%-Zahl vom Business- zum **technischen**
 Argument: Bei 70 % Mobile gehört die Mobile-Basis auf den kritischen Pfad (schnellster Paint
-für die Mehrheit), die Desktop-Ergänzung wird nachrangig geladen. Baust du Desktop First,
-bekämen die 70 % Handy-Nutzer den *langsameren* Pfad. Für eine mobil-lastige Seite ist
-Desktop First hier also **technisch langsamer**.
+für die Mehrheit), die Desktop-Ergänzung wird nachrangig geladen.
 
-**Wann hättest du recht?** Wenn deine Nutzer mehrheitlich am Desktop sitzen (B2B-Tools,
-Dashboards, interne Admin-Oberflächen). Dann gehört die Desktop-Basis auf den kritischen
-Pfad, und Desktop First ist die schnellere Wahl. Merksatz: **Das render-blockende Fundament
-gehört der Mehrheit deiner Nutzer.**
+**Wann ist Desktop First die bessere Wahl?** Wenn die Nutzer mehrheitlich am Desktop sitzen
+(B2B-Tools, Dashboards, interne Admin-Oberflächen). Dann gehört die Desktop-Basis auf den
+kritischen Pfad. Merksatz: **Das render-blockende Fundament gehört der Mehrheit der Nutzer.**
 
 ---
 
@@ -81,7 +75,7 @@ Im Normalfall (eine gebündelte Datei) sind Laden/Lesen/Rendern identisch. Dann 
    First gestaltet die Erfahrung für die meisten Nutzer *primär* — nicht als nachträglich
    gequetschte Notlösung.
 
-2. **Die intuitiv richtige Richtung: klein → groß statt groß → klein.** Es ist einfacher,
+2. **Die intuitivere Richtung: klein → groß statt groß → klein.** Es ist einfacher,
    von einer schlichten Basis auszugehen und für mehr Platz *Dinge hinzuzufügen*
    (Progressive Enhancement), als ein üppiges Desktop-Layout für kleine Screens wieder
    *zurückzubauen*. Beim Verkleinern übersieht man leicht Kanten (Overflow, zu große
@@ -95,7 +89,7 @@ Im Normalfall (eine gebündelte Datei) sind Laden/Lesen/Rendern identisch. Dann 
    /* Desktop First: erst aufbauen, dann zurücksetzen */
    .grid { display: grid; grid-template-columns: repeat(3,1fr); padding: 40px; }
    @media (max-width: 767px) {
-     .grid { display: block; padding: 10px; } /* nur zum "Rückgängigmachen" */
+     .grid { display: block; padding: 10px; }
    }
 
    /* Mobile First: additiv, nichts zurückzunehmen */
@@ -104,7 +98,7 @@ Im Normalfall (eine gebündelte Datei) sind Laden/Lesen/Rendern identisch. Dann 
      .grid { display: grid; grid-template-columns: repeat(3,1fr); padding: 40px; }
    }
    ```
-   → Mobile First ist deshalb oft **etwas schlanker und deutlich sauberer** in der Kaskade.
+   → Mobile First ist oft **etwas schlanker und sauberer** in der Kaskade.
    Der Gewinn ist aber **Lesbarkeit/Wartbarkeit**, *nicht* Geschwindigkeit — die paar Bytes
    Unterschied sind für die Ladezeit irrelevant.
 
@@ -119,7 +113,7 @@ Im Normalfall (eine gebündelte Datei) sind Laden/Lesen/Rendern identisch. Dann 
 
 ---
 
-## Fazit in einem Satz
+## Fazit
 
 > Laden und Lesen sind bei Mobile und Desktop First gleich — einen Ladezeit-Vorteil hat
 > Desktop First nicht. Nur beim **Rendern** kann eine Richtung gewinnen, und zwar zugunsten
