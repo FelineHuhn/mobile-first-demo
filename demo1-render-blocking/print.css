@@ -1,0 +1,10 @@
+/* ============================================================
+   print.css  —  media="print"
+   Der EXTREMFALL zum Zeigen: matcht am Bildschirm NIE.
+   -> Laedt mit "Lowest" Prioritaet, blockiert den Paint NIE.
+   Perfektes, eindeutiges Beispiel im Network Tab.
+   ============================================================ */
+@page { margin: 2cm; }
+body { background: #fff; color: #000; }
+.badge, .card:hover { all: unset; }
+nav, .no-print { display: none; }

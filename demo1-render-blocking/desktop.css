@@ -1,0 +1,52 @@
+/* ============================================================
+   desktop.css  —  NUR fuer grosse Screens
+   Wird im <link> mit  media="(min-width: 1024px)"  eingebunden.
+
+   -> Auf dem Handy (Viewport < 1024px) matcht die Query NICHT.
+   -> Der Browser LAEDT diese Datei trotzdem, aber:
+        * mit NIEDRIGSTER Prioritaet ("Lowest" im Network Tab)
+        * sie blockiert den ersten Paint NICHT.
+   Das ist der eigentliche technische Mobile-First-Vorteil.
+
+   Diese Datei ist absichtlich mit Kommentaren aufgeblaeht,
+   damit man ihre Groesse im Network Tab gut sieht und erkennt:
+   "grosse Datei, wird geladen, blockiert aber nicht".
+   ============================================================ */
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+h1 { font-size: 2.2rem; }
+
+/* Mehrspaltiges Grid erst ab Desktop */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.card { padding: 2rem; }
+
+.card:hover {
+  /* Hover-States: auf Touch-Geraeten ohnehin nutzlos -> gehoert nach Desktop */
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+/* ---- Fuellmasse, damit die Datei sichtbar "schwer" wird -------------------
+   (In der Realitaet waeren das echte Desktop-Feinheiten: aufwendige
+    Navigations-Layouts, Mega-Menues, Tabellen, Spalten-Raster usw.)
+   -------------------------------------------------------------------------- */
+.u-1 { color: #111; } .u-2 { color: #222; } .u-3 { color: #333; }
+.u-4 { color: #444; } .u-5 { color: #555; } .u-6 { color: #666; }
+.u-7 { color: #777; } .u-8 { color: #888; } .u-9 { color: #999; }
+.u-10 { color: #aaa; } .u-11 { color: #bbb; } .u-12 { color: #ccc; }
+.u-13 { color: #ddd; } .u-14 { color: #eee; } .u-15 { color: #f0f0f0; }
+.pad-1 { padding: 1px; } .pad-2 { padding: 2px; } .pad-3 { padding: 3px; }
+.pad-4 { padding: 4px; } .pad-5 { padding: 5px; } .pad-6 { padding: 6px; }
+.pad-7 { padding: 7px; } .pad-8 { padding: 8px; } .pad-9 { padding: 9px; }
+.mt-1 { margin-top: 1px; } .mt-2 { margin-top: 2px; } .mt-3 { margin-top: 3px; }
+.mt-4 { margin-top: 4px; } .mt-5 { margin-top: 5px; } .mt-6 { margin-top: 6px; }
+.gap-1 { gap: 1px; } .gap-2 { gap: 2px; } .gap-3 { gap: 3px; }
+.gap-4 { gap: 4px; } .gap-5 { gap: 5px; } .gap-6 { gap: 6px; }
+/* (viele weitere Utility-Klassen wuerden hier folgen ...) */

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo 1 – Render-Blocking &amp; Priority</title>
+
+  <!-- 1) BASIS: kein media-Attribut  -> IMMER render-blocking (Priority: Highest) -->
+  <link rel="stylesheet" href="mobile.css">
+
+  <!-- 2) DESKTOP: matcht auf dem Handy NICHT
+          -> wird geladen, aber Priority: Lowest, NICHT render-blocking -->
+  <link rel="stylesheet" href="desktop.css" media="(min-width: 1024px)">
+
+  <!-- 3) PRINT: matcht am Bildschirm NIE
+          -> Priority: Lowest, blockiert den Paint nie (Extrembeispiel) -->
+  <link rel="stylesheet" href="print.css" media="print">
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">Demo 1</span>
+    <h1>Render-Blocking &amp; Download-Priorität im Network Tab</h1>
+
+    <div class="grid">
+      <div class="card">
+        <h2>mobile.css</h2>
+        <p>Kein <code>media</code>-Attribut → <strong>Highest</strong>, render-blocking.
+        Das ist das Fundament, auf das der erste Paint wartet.</p>
+      </div>
+      <div class="card">
+        <h2>desktop.css</h2>
+        <p><code>media="(min-width:1024px)"</code>. Auf dem Handy: <strong>Lowest</strong>,
+        wird geladen, blockiert den Paint <em>nicht</em>.</p>
+      </div>
+      <div class="card">
+        <h2>print.css</h2>
+        <p><code>media="print"</code>. Am Bildschirm: <strong>Lowest</strong>,
+        blockiert nie. Der eindeutige Extremfall.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Was du im Network Tab beobachtest</h2>
+      <ol>
+        <li>DevTools → <strong>Network</strong> → Spalte <strong>Priority</strong> einblenden
+            (Rechtsklick auf einen Spaltenkopf → Priority anhaken).</li>
+        <li>Device-Toolbar an (<code>Cmd/Ctrl+Shift+M</code>), Gerät „iPhone SE" wählen, neu laden.</li>
+        <li><code>mobile.css</code> = <strong>Highest</strong>,
+            <code>desktop.css</code> &amp; <code>print.css</code> = <strong>Lowest</strong>.</li>
+        <li>Auf „Responsive / 1440px" umstellen, neu laden →
+            <code>desktop.css</code> springt auf <strong>Highest</strong> (jetzt render-blocking).</li>
+      </ol>
+    </div>
+  </div>
+</body>
+</html>

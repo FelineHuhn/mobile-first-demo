@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo 2 – Responsive Images im Network Tab</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background: #f8fafc; color: #0f172a; line-height: 1.5; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 1rem; }
+    .badge { display:inline-block; padding:.2rem .6rem; border-radius:999px; background:#16a34a; color:#fff; font-size:.8rem; }
+    figure { margin: 1rem 0; }
+    img { width: 100%; height: auto; border-radius: 12px; display: block; }
+    .card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; margin:1rem 0; }
+    code { background:#eef2ff; padding:.1rem .3rem; border-radius:4px; }
+    table { border-collapse: collapse; width: 100%; }
+    td, th { border:1px solid #e2e8f0; padding:.5rem; text-align:left; font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">Demo 2</span>
+    <h1>Responsive Images: das Handy lädt weniger Bytes</h1>
+
+    <div class="card">
+      <p>Der Browser wählt <strong>vor</strong> dem Download anhand von Viewport &amp;
+      <code>sizes</code> die passende Datei aus <code>srcset</code>. Ein Smartphone lädt
+      <code>photo-480.jpg</code> (klein) statt <code>photo-2000.jpg</code> (groß) –
+      obwohl der HTML-Code identisch ist.</p>
+    </div>
+
+    <!-- Der Kern: EIN img, drei Quellen. Der Browser entscheidet. -->
+    <figure>
+      <img
+        srcset="img/photo-480.png 480w,
+                img/photo-1200.png 1200w,
+                img/photo-2000.png 2000w"
+        sizes="(min-width: 1024px) 1000px,
+               (min-width: 640px) 90vw,
+               100vw"
+        src="img/photo-1200.png"
+        alt="Demo-Foto mit Farbverlauf">
+    </figure>
+
+    <div class="card">
+      <h2>Ungefähre Dateigrößen (echt, in diesem Ordner)</h2>
+      <table>
+        <tr><th>Datei</th><th>Auflösung</th><th>Größe</th><th>geladen bei</th></tr>
+        <tr><td>photo-480.png</td><td>480×320</td><td>36 KB</td><td>schmales Handy</td></tr>
+        <tr><td>photo-1200.png</td><td>1200×800</td><td>312 KB</td><td>Tablet / kleiner Desktop</td></tr>
+        <tr><td>photo-2000.png</td><td>2000×1333</td><td>948 KB</td><td>großer / Retina-Desktop</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Was du im Network Tab beobachtest</h2>
+      <ol>
+        <li>DevTools → <strong>Network</strong>, Filter <strong>Img</strong>, Cache leeren
+            (<em>Disable cache</em> anhaken).</li>
+        <li>Device-Toolbar an, „iPhone SE" → neu laden → es lädt <strong>photo-480.jpg (~36 KB)</strong>.</li>
+        <li>Auf „Responsive" 1440px stellen → neu laden → jetzt <strong>photo-2000.jpg (~948 KB)</strong>.</li>
+        <li>Vergleich: 36 KB vs. 948 KB = <strong>~26× weniger</strong> Daten fürs Handy –
+            allein durch die richtige Bildwahl. So viel spart keine Media-Query-Schreibrichtung je ein.</li>
+      </ol>
+      <p><strong>Tipp:</strong> Der Effekt greift nur beim <em>ersten</em> Laden pro Größe →
+      immer „Disable cache" an lassen und hart neu laden.</p>
+    </div>
+  </div>
+</body>
+</html>

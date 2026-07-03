@@ -1,0 +1,46 @@
+/* ============================================================
+   mobile.css  —  BASIS / MOBILE FIRST
+   Kein media-Attribut am <link> -> IMMER render-blocking.
+   Das ist das "Fundament", das JEDES Geraet zum ersten Paint braucht.
+   Bewusst klein gehalten.
+   ============================================================ */
+
+:root {
+  --accent: #2563eb;
+  --bg: #f8fafc;
+  --fg: #0f172a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.5;
+}
+
+.wrap { padding: 1rem; }
+
+h1 { font-size: 1.4rem; }
+
+.card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: .2rem .6rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: .8rem;
+}
+
+/* Einspaltiges Basis-Layout (Mobile) */
+.grid { display: block; }
