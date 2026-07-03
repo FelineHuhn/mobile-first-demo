@@ -6,7 +6,17 @@ Zwei kleine Demos, die zeigen was hinter Mobile First technisch steckt — direk
 
 > Ausführliche Erklärung: **[research.md](./research.md)**
 
-DevTools öffnen: **F12** (oder `Cmd/Ctrl + Alt/Option + I`)
+DevTools öffnen:
+| | Shortcut |
+|---|---|
+| **macOS** | `Cmd + Option + I` |
+| **Windows** | `F12` oder `Ctrl + Shift + I` |
+
+Device-Toolbar (Handy simulieren):
+| | Shortcut |
+|---|---|
+| **macOS** | `Cmd + Shift + M` |
+| **Windows** | `Ctrl + Shift + M` |
 
 ---
 
@@ -17,7 +27,7 @@ DevTools öffnen: **F12** (oder `Cmd/Ctrl + Alt/Option + I`)
 
 1. Öffne `/demo1-render-blocking/`
 2. DevTools → **Network** → Spalte **Priority** einblenden (Rechtsklick auf Spaltenüberschrift)
-3. Device-Toolbar an (📱-Icon oben links) → **„iPhone SE"** → neu laden
+3. Device-Toolbar an (📱-Icon oben links in den DevTools) → **„iPhone SE"** → neu laden
 
 | Datei | Priority | render-blocking? |
 |---|---|---|
