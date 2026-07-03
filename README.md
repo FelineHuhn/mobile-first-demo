@@ -12,8 +12,7 @@ keine Installation, kein Build. (Perfekt, bevor ihr JS gelernt habt.)
 ## Starten (kein JavaScript, kein Server)
 
 **Variante A — online (empfohlen, nichts installieren):**
-Wenn das Repo auf GitHub Pages liegt, einfach die Seite öffnen:
-`https://<dein-user>.github.io/mobile-first-demo-ohne-js/`
+👉 **[https://felinehuhn.github.io/mobile-first-demo/](https://felinehuhn.github.io/mobile-first-demo/)**
 So verhalten sich **Download-Priorität, Caching und `srcset`** genau wie im echten Web.
 
 **Variante B — lokal, nur angucken:**
