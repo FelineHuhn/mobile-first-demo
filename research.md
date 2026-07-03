@@ -13,21 +13,24 @@ LADEN  ─────►  LESEN  ─────►  RENDERN
 
 **Laden = Download / Netzwerk**
 Der Browser holt die Bytes über die Leitung (`style.css`, Bilder, JS …).
+
 - Kostet: Netzwerkzeit. Hängt ab von Dateigröße, Verbindung, Download-**Priorität**.
-- Im **Network Tab** sichtbar (Spalten *Size* / *Time*, Wasserfall).
+- Im **Network Tab** sichtbar (Spalten _Size_ / _Time_, Wasserfall).
 
 **Lesen = Parsen / CSSOM bauen**
-Der Browser *versteht* die geladenen Bytes: Er zerlegt jede Regel und baut daraus die
+Der Browser _versteht_ die geladenen Bytes: Er zerlegt jede Regel und baut daraus die
 CSSOM (das interne Regel-Modell).
-- Kostet: CPU-Zeit. Er parst **alle** Regeln — auch die in `@media`-Blöcken, die gerade
-  nicht zutreffen. Nur *angewendet* werden sie nicht.
-- Im **Performance-Panel** sichtbar als *„Parse Stylesheet" / „Recalculate Style"*.
+
+- Kostet: CPU-Zeit. Er parst **alle** Regeln, auch die in `@media`-Blöcken, die gerade
+  nicht zutreffen. Nur _angewendet_ werden sie nicht.
+- Im **Performance-Panel** sichtbar als _„Parse Stylesheet" / „Recalculate Style"_.
 
 **Rendern = Layout + Paint**
 Aus DOM + CSSOM baut der Browser den Render-Tree, rechnet das Layout und
 malt es auf den Bildschirm. Das ist der Moment „die Seite ist da" (First Contentful Paint).
+
 - Kostet: CPU/GPU-Zeit.
-- Im **Performance-Panel** sichtbar als *„Layout", „Paint"* und die *FCP*-Markierung.
+- Im **Performance-Panel** sichtbar als _„Layout", „Paint"_ und die _FCP_-Markierung.
 
 **Der Zusammenhang „render-blocking":** CSS ist standardmäßig render-blocking — Schritt 3
 (Rendern) startet erst, wenn Laden **und** Lesen des render-blockenden CSS fertig sind.
@@ -40,11 +43,11 @@ Es gibt zwei reale Fälle:
 
 ### Fall 1 — alles in EINER gebündelten CSS-Datei (der Normalfall)
 
-| Schritt | Mobile First (`min-width`) vs. Desktop First (`max-width`) |
-|---|---|
-| **Laden** | identisch — die komplette Datei wird immer geladen |
-| **Lesen** | identisch — alle Regeln werden geparst |
-| **Rendern** | identisch — gleiche Regeln, gleiches Ergebnis |
+| Schritt     | Mobile First (`min-width`) vs. Desktop First (`max-width`) |
+| ----------- | ---------------------------------------------------------- |
+| **Laden**   | identisch — die komplette Datei wird immer geladen         |
+| **Lesen**   | identisch — alle Regeln werden geparst                     |
+| **Rendern** | identisch — gleiche Regeln, gleiches Ergebnis              |
 
 → Bei einer gebündelten Datei ist es **performance-neutral**. Desktop First ist hier
 **nicht schneller** — es ist gleich schnell.
@@ -52,10 +55,10 @@ Es gibt zwei reale Fälle:
 ### Fall 2 — CSS in mehrere Dateien mit `media`-Attribut gesplittet
 
 Hier gibt es einen echten Render-Vorteil — aber er zeigt in die **andere** Richtung.
-Ein Stylesheet, dessen `media`-Query gerade nicht zutrifft, wird zwar noch *geladen*, aber
+Ein Stylesheet, dessen `media`-Query gerade nicht zutrifft, wird zwar noch _geladen_, aber
 mit **niedrigster Priorität** und **ohne den ersten Paint zu blockieren**.
 
-Entscheidend ist dann: *Wer bekommt das kleine, render-blockende Fundament?* Antwort: **die
+Entscheidend ist dann: _Wer bekommt das kleine, render-blockende Fundament?_ Antwort: **die
 Mehrheit der Nutzer.** Genau hier wird die 70-%-Zahl vom Business- zum **technischen**
 Argument: Bei 70 % Mobile gehört die Mobile-Basis auf den kritischen Pfad (schnellster Paint
 für die Mehrheit), die Desktop-Ergänzung wird nachrangig geladen.
@@ -72,42 +75,58 @@ Im Normalfall (eine gebündelte Datei) sind Laden/Lesen/Rendern identisch. Dann 
 **keine** Performance-Gründe, sondern diese:
 
 1. **Die Mehrheit bekommt die durchdachte Erfahrung.** ~70 % Mobile-Traffic heißt: Mobile
-   First gestaltet die Erfahrung für die meisten Nutzer *primär* — nicht als nachträglich
+   First gestaltet die Erfahrung für die meisten Nutzer _primär_ — nicht als nachträglich
    gequetschte Notlösung.
 
 2. **Die intuitivere Richtung: klein → groß statt groß → klein.** Es ist einfacher,
-   von einer schlichten Basis auszugehen und für mehr Platz *Dinge hinzuzufügen*
+   von einer schlichten Basis auszugehen und für mehr Platz _Dinge hinzuzufügen_
    (Progressive Enhancement), als ein üppiges Desktop-Layout für kleine Screens wieder
-   *zurückzubauen*. Beim Verkleinern übersieht man leicht Kanten (Overflow, zu große
+   _zurückzubauen_. Beim Verkleinern übersieht man leicht Kanten (Overflow, zu große
    Abstände, Hover-Only-Funktionen ohne Touch-Alternative).
 
 3. **Weniger Code? — teilweise, aber ehrlich betrachtet:**
    Der **Gesamtumfang** ist bei beiden Ansätzen ungefähr gleich. Aber Desktop First
    (`max-width`, subtraktiv) braucht tendenziell mehr **reine Override-/Reset-Zeilen**,
    deren einziger Zweck es ist, einen Desktop-Wert wieder aufzuheben:
+
    ```css
    /* Desktop First: erst aufbauen, dann zurücksetzen */
-   .grid { display: grid; grid-template-columns: repeat(3,1fr); padding: 40px; }
+   .grid {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     padding: 40px;
+   }
    @media (max-width: 767px) {
-     .grid { display: block; padding: 10px; }
+     .grid {
+       display: block;
+       padding: 10px;
+     }
    }
 
    /* Mobile First: additiv, nichts zurückzunehmen */
-   .grid { display: block; padding: 10px; }
+   .grid {
+     display: block;
+     padding: 10px;
+   }
    @media (min-width: 768px) {
-     .grid { display: grid; grid-template-columns: repeat(3,1fr); padding: 40px; }
+     .grid {
+       display: grid;
+       grid-template-columns: repeat(3, 1fr);
+       padding: 40px;
+     }
    }
    ```
+
    → Mobile First ist oft **etwas schlanker und sauberer** in der Kaskade.
-   Der Gewinn ist aber **Lesbarkeit/Wartbarkeit**, *nicht* Geschwindigkeit — die paar Bytes
+   Der Gewinn ist aber **Lesbarkeit/Wartbarkeit**, _nicht_ Geschwindigkeit — die paar Bytes
    Unterschied sind für die Ladezeit irrelevant.
 
 4. **Priorisierung wird erzwungen.** Wenig Platz zwingt zur Frage „Was ist hier wirklich
    wichtig?" — das verhindert überladene Layouts von vornherein.
 
-5. **Der einzige *große* Ladezeit-Hebel liegt sowieso nicht im CSS.** Bilder, Fonts und JS
+5. **Der einzige _große_ Ladezeit-Hebel liegt sowieso nicht im CSS.** Bilder, Fonts und JS
    wiegen ein Vielfaches der CSS-Datei. Über `srcset`/`sizes` lädt ein Handy real ein
-   kleines Bild (z. B. 36 KB) statt der Desktop-Variante (z. B. 948 KB). *Diese* Ersparnis
+   kleines Bild (z. B. 36 KB) statt der Desktop-Variante (z. B. 948 KB). _Diese_ Ersparnis
    ist echte Ladezeit — und sie entspringt dem Mobile-First-Denken, nicht der Schreibrichtung
    der Media Queries.
 
